@@ -5,3 +5,94 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+model Produto {
+  idProduto String @id @default(uuid())
+  nome String
+  descricao String
+  unMedida String
+  qntMin Int
+  qntEstoque Int
+  status Boolean
+  itens Item[]
+  movimentacoes Movimentacao[]
+  alertasEstoque AlertaEstoque[]
+}
+
+model Fornecedor {
+  idFornecedor String @id @default(uuid())
+  razaoSocial String
+  cnpj String
+  endereco String
+  telefone String
+  email String
+  notasFiscais NotaFiscal[]
+}
+
+model NotaFiscal {
+  idNF String @id @default(uuid())
+  fornecedor Fornecedor @relation(fields: [fornecedorId], references: [idFornecedor])
+  fornecedorId String
+  numero String
+  serie String
+  dataEmissao DateTime
+  itens Item[]
+}
+
+model Item {
+  idItem String @id @default(uuid())
+  notaFiscal NotaFiscal @relation(fields: [notafiscalId], references: [idNF])
+  notafiscalId String
+  produto Produto @relation(fields: [produtoId], references: [idProduto])
+  produtoId String
+  qntdRecebida Int
+  ncm String
+  cfop String
+  precoUnit Float
+  lotes Lote[]
+}
+
+model Lote {
+  idLote String @id @default(uuid())
+  item Item @relation(fields: [itemId], references: [idItem])
+  itemId String
+  numero String
+  dataEntrada DateTime
+  dataValidade DateTime
+  qtd Int
+  movimentacoes Movimentacao[]
+  alertasValidade AlertaValidade[]
+}
+
+model Movimentacao {
+  idMovimentacao String @id @default(uuid())
+  produto Produto @relation(fields: [produtoId], references: [idProduto])
+  produtoId String
+  lote Lote @relation(fields: [loteId], references: [idLote])
+  loteId String
+  qnt Int
+  dataHora DateTime
+  responsavel String
+  observacoes String
+}
+
+model PoliticaSaida{
+  id String @id @default(uuid())
+  tipo String
+}
+
+model AlertaEstoque {
+  idAlertaEstoque String @id @default(uuid())
+  produto Produto @relation(fields: [produtoId], references: [idProduto])
+  produtoId String
+  qntAtual String
+  qntMin String
+}
+
+model AlertaValidade {
+  idAlertaValidade String @id @default(uuid())
+  lote Lote @relation(fields: [loteId], references: [idLote])
+  loteId String
+  qntAtual Int
+  dataValidade DateTime
+}
