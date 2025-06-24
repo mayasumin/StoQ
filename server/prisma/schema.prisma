@@ -11,9 +11,9 @@ model Produto {
   nome String
   descricao String
   unMedida String
-  qntMin Int
-  qntEstoque Int
-  status Boolean
+  //qntMin Int
+  //qntEstoque Int
+  //status Boolean
   itens Item[]
   movimentacoes Movimentacao[]
   alertasEstoque AlertaEstoque[]
