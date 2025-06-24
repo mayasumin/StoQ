@@ -37,7 +37,7 @@ export class ProdutosForm {
     })
   }
 
-  salvar() {
+  save() {
     console.log('salvando produto')
     if (this.form.valid) {
       this.produtoService.create(this.form.value).subscribe({

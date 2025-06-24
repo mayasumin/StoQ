@@ -8,7 +8,7 @@ export interface Produto {
   descricao: string;
   unMedida: string;
   //qntMin: number;
-  ///qntEstoque: number;
+  //qntEstoque: number;
   //status: boolean;
 }
 
@@ -27,5 +27,13 @@ export class ProdutoService {
       .pipe(
         tap(() => console.log('Produto criado', date))
       );
+  }
+
+  update(id: string, date: Partial<Produto>): Observable<Produto> {
+    return this.http.patch<Produto>(`/api/produtos/${id}`, date);
+  }
+
+  searchForId(id: string): Observable<Produto> {
+    return this.http.get<Produto>(`/api/produtos/${id}`)
   }
 }

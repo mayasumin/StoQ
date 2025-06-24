@@ -1,0 +1,22 @@
+@use '../../styles/variables' as *;
+
+.navbar {
+    background-color: $white;
+    
+    display: flex;
+    justify-content: space-between;
+
+    button {
+        font-weight: 500;
+        font-style: italic;
+        color: $secondary;
+
+        &:hover {
+            color: $terciary !important;
+        }
+    }
+
+    .active {
+        color: $terciary;
+    }
+}
