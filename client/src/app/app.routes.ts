@@ -6,13 +6,11 @@ import { Fornecedores } from './pages/fornecedores/fornecedores';
 import { Estoque } from './pages/estoque/estoque';
 import { PoliticaSaida } from './pages/politica-saida/politica-saida';
 import { ProdutosForm } from './pages/produtos/produtos-form/produtos-form';
-import { ProdutosEdit } from './pages/produtos/produtos-edit/produtos-edit';
 
 export const routes: Routes = [  
     { path: 'dashboard', component: Dashboard },
     { path: 'produtos', component: ProdutosList },
     { path: 'produtos/novo', component: ProdutosForm },
-    { path: 'produtos/editar/:id', component: ProdutosEdit },
     { path: 'fornecedores', component: Fornecedores },
     { path: 'estoque', component: Estoque },
     { path: 'politicadesaida', component: PoliticaSaida },

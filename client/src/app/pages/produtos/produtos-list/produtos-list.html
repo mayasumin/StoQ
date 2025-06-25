@@ -23,6 +23,9 @@
   <tr mat-row *matRowDef="let row; columns: ['nome','descricao'];"></tr>
 </table>
 
-<button mat-fab color="primary" routerLink="/produtos/novo">
-  <mat-icon>add</mat-icon>
-</button>
+<div class="top-bar">
+  <button mat-flat-button color="primary" (click)="openModalNewProduct()">
+    <mat-icon>add</mat-icon>
+    Novo Produto
+  </button>
+</div>

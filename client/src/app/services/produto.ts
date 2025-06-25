@@ -7,12 +7,13 @@ export interface Produto {
   nome: string;
   descricao: string;
   unMedida: string;
-  //qntMin: number;
-  //qntEstoque: number;
-  //status: boolean;
+  qntMin: number;
+  qntEstoque: number;
+  status: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
+
 export class ProdutoService {
   private readonly API = '/api/produtos';
 
