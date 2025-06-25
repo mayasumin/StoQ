@@ -9,13 +9,14 @@ generator client {
 model Produto {
   idProduto String @id @default(uuid())
   nome String
-  descricao String
-  unMedida String
-  //qntMin Int
-  //qntEstoque Int
-  //status Boolean
+  descricao String?
+  unMedida String?
+  qntMin Int
+  qntEstoque Int
+  status Boolean
   itens Item[]
   movimentacoes Movimentacao[]
+  lotes Lote[]
   alertasEstoque AlertaEstoque[]
 }
 
@@ -46,8 +47,8 @@ model Item {
   produto Produto @relation(fields: [produtoId], references: [idProduto])
   produtoId String
   qntdRecebida Int
-  ncm String
-  cfop String
+  ncm String?
+  cfop String?
   precoUnit Float
   lotes Lote[]
 }
@@ -56,10 +57,14 @@ model Lote {
   idLote String @id @default(uuid())
   item Item @relation(fields: [itemId], references: [idItem])
   itemId String
+  produto Produto @relation(fields: [produtoId], references: [idProduto])
+  produtoId String
   numero String
   dataEntrada DateTime
   dataValidade DateTime
-  qtd Int
+  qtdRecebida Int
+  localArmazenamento String?
+  observacoes String?
   movimentacoes Movimentacao[]
   alertasValidade AlertaValidade[]
 }
@@ -70,10 +75,10 @@ model Movimentacao {
   produtoId String
   lote Lote @relation(fields: [loteId], references: [idLote])
   loteId String
-  qnt Int
+  qntRetirada Int
   dataHora DateTime
   responsavel String
-  observacoes String
+  observacoes String?
 }
 
 model PoliticaSaida{
