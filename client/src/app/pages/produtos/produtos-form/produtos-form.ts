@@ -57,20 +57,40 @@ export class ProdutosForm implements OnInit {
 
     if (this.data?.produto) {
       this.editing = true;
-      this.form.patchValue(this.data.produto);
+      const produto = { 
+        ...this.data.produto,
+        status: this.data.produto.status === 'ativo'
+      };
+
+      this.form.patchValue(produto);
     }
   }
 
   save() {
-  if (this.form.invalid) return;
-  
-  const data = this.form.value;
+  if (this.form.invalid) {
+    console.log('Form inválido, abortando save.')
+    return;
+  } 
+
+  const raw = this.form.value;
+
+  const data = {
+    ...raw,
+    status: raw.status ? 'ativo' : 'inativo'
+  }
+
+  console.log('Dados para salvar:', data);
+
 
   if (this.editing) {
-    const id = this.data.produto?.id as string;
+    const id = this.data.produto?.idProduto as string;
+    console.log('Atualizando produto id:', id);
 
     this.produtoService.update(id, data).subscribe({
-      next: () => this.dialogRef.close('update'),
+      next: (res) => {
+        this.dialogRef.close('update')
+        console.log('Update sucesso:', res);
+      },
       error: (err) => console.error('Erro ao atualizar produto', err)
     })
   } else {

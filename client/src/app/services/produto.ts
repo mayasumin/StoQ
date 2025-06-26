@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 
 export interface Produto {
-  id?: string;
+  idProduto: string;
   nome: string;
   descricao: string;
   unMedida: string;
   qntMin: number;
   qntEstoque: number;
-  status: boolean;
+  status: 'ativo' | 'inativo';
 }
 
 @Injectable({ providedIn: 'root' })
@@ -23,10 +23,10 @@ export class ProdutoService {
     return this.http.get<Produto[]>(this.API);
   }
 
-  create(date: Produto): Observable<Produto> {
-    return this.http.post<Produto>(this.API, date)
+  create(data: Produto): Observable<Produto> {
+    return this.http.post<Produto>(this.API, data)
       .pipe(
-        tap(() => console.log('Produto criado', date))
+        tap(() => console.log('Produto criado', data))
       );
   }
 

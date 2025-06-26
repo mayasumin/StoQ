@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MatHeaderCellDef, MatHeaderRowDef, MatTableModule } from '@angular/material/table';
+import { MatHeaderCellDef, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatRowDef } from '@angular/material/table';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import { ProdutoService, Produto } from '../../../services/produto';
 import { ProdutosForm } from '../produtos-form/produtos-form';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-produtos-list',
@@ -18,10 +18,9 @@ import { ProdutosForm } from '../produtos-form/produtos-form';
     MatTableModule,
     MatIconModule,
     MatButtonModule,
-    MatRowDef,
-    MatHeaderRowDef,
     MatHeaderCellDef,
-    MatDialogModule
+    MatDialogModule,
+    MatDividerModule
   ],
   templateUrl: './produtos-list.html',
   styleUrl: './produtos-list.scss'
@@ -72,8 +71,8 @@ export class ProdutosList implements OnInit {
 
   openModalEditProduct(produto: Produto) {
     const dialogRef = this.dialog.open(ProdutosForm, {
-      width: '50rem',
-      height: '38.375rem',
+      width: '51rem',
+      height: '29rem',
       panelClass: 'modal-stoq',
       data: { produto }
     });
