@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, NotFoundException, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, NotFoundException } from '@nestjs/common';
 
 import { ProdutoService } from './produto.service';
 import { Produto } from '@prisma/client';
@@ -13,7 +13,9 @@ export class ProdutoController {
     }
 
     @Get(':id')
-    async searchById(@Param('id') id: string): Promise<Produto> {
+    async searchById(
+        @Param('id') id: string
+    ): Promise<Produto> {
         const produto = await this.service.searchById(id);
         if (!produto) {
             throw new NotFoundException(`Produto com id ${id} não encontrado`);
@@ -22,7 +24,9 @@ export class ProdutoController {
     }
 
     @Post()
-    create(@Body() data: Omit<Produto, 'id'>): Promise<Produto> {
+    create(
+        @Body() data: Omit<Produto, 'id'>
+    ): Promise<Produto> {
         return this.service.create(data);
     }
 

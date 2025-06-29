@@ -6,15 +6,6 @@ import { Produto } from '@prisma/client';
 @Injectable()
 export class ProdutoService {
     constructor(private prisma: PrismaService) {}
-    
-    async listPage(page: number, pageSize: number): Promise<{ data: Produto[]; total: number }> {
-        const skip = (page - 1) * pageSize;
-        const [data, total] = await Promise.all([
-        this.prisma.produto.findMany({ skip, take: pageSize }),
-        this.prisma.produto.count(),
-    ]);
-    return { data, total };
-}
 
     findAll(): Promise<Produto[]> {
         return this.prisma.produto.findMany()
