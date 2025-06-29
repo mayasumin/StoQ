@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -50,8 +50,8 @@ export class ProdutosForm implements OnInit {
       nome: ['', Validators.required],
       descricao: [''],
       unMedida: ['', Validators.required],
-      qntMin: [1, [Validators.required, Validators.min(1)]],
-      qntEstoque: [1, [Validators.required, Validators.min(1)]],
+      qntMin: [1, [Validators.required, Validators.min(0.5)]],
+      qntEstoque: [1, [Validators.required, Validators.min(0.5)]],
       status: [false]
     });
 
@@ -59,7 +59,7 @@ export class ProdutosForm implements OnInit {
       this.editing = true;
       const produto = { 
         ...this.data.produto,
-        status: this.data.produto.status === 'ativo'
+        status: this.data.produto.status === 'Ativo'
       };
 
       this.form.patchValue(produto);
@@ -68,7 +68,6 @@ export class ProdutosForm implements OnInit {
 
   save() {
   if (this.form.invalid) {
-    console.log('Form inválido, abortando save.')
     return;
   } 
 
@@ -76,11 +75,8 @@ export class ProdutosForm implements OnInit {
 
   const data = {
     ...raw,
-    status: raw.status ? 'ativo' : 'inativo'
+    status: raw.status ? 'Ativo' : 'Inativo'
   }
-
-  console.log('Dados para salvar:', data);
-
 
   if (this.editing) {
     const id = this.data.produto?.idProduto as string;

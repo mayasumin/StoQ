@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MatHeaderCellDef, MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
 
 import { ProdutoService, Produto } from '../../../services/produto';
 import { ProdutosForm } from '../produtos-form/produtos-form';
-import { MatDividerModule } from '@angular/material/divider';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-produtos-list',
@@ -18,40 +19,47 @@ import { MatDividerModule } from '@angular/material/divider';
     MatTableModule,
     MatIconModule,
     MatButtonModule,
-    MatHeaderCellDef,
     MatDialogModule,
-    MatDividerModule
+    MatDividerModule,
+    MatPaginatorModule
   ],
   templateUrl: './produtos-list.html',
   styleUrl: './produtos-list.scss'
 })
-export class ProdutosList implements OnInit {
-  produtos: Produto[] = [];
-  loading = false;
+export class ProdutosList implements OnInit, AfterViewInit {
+  dataSource = new MatTableDataSource<Produto>([]);
+  displayedColumns = ['nome','descricao','unMedida','qntMin','qntEstoque','status','editar'];
+
   error?: string;
+  loading = false;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor (
     private produtoService: ProdutoService,
     private dialog: MatDialog
   ) {}    
   
-  ngOnInit() {
-    this.loadProdutos();
+  ngOnInit(): void {
+    this.loadPage();
   }
 
-  loadProdutos() {
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  loadPage() {
     this.loading = true;
     this.produtoService.listAll().subscribe({
-      next: (list) => {
-        this.produtos = list;
+      next: list => {
+        this.dataSource.data = list;
         this.loading = false;
       },
-      error: (err) => {
-        console.error(err);
-        this.error = 'Não foi possível carregar os produtos.'
+      error: () => {
+        this.error = 'Erro ao carregar produtos.';
         this.loading = false;
       }
-    })
+    });
   }
 
   openModalNewProduct(): void {
@@ -64,7 +72,7 @@ export class ProdutosList implements OnInit {
 
     dialogRef.afterClosed().subscribe((res) => {
       if (res === 'update') {
-        this.loadProdutos();
+        this.loadPage();
       }
     });
   }
@@ -79,7 +87,7 @@ export class ProdutosList implements OnInit {
 
     dialogRef.afterClosed().subscribe((res) => {
       if (res === 'update') {
-        this.loadProdutos();
+        this.loadPage();
       }
     });
   }

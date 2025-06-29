@@ -13,7 +13,7 @@ model Produto {
   unMedida String?
   qntMin Int
   qntEstoque Int
-  status String @default("ativo")
+  status String @default("Ativo")
   itens Item[]
   movimentacoes Movimentacao[]
   lotes Lote[]

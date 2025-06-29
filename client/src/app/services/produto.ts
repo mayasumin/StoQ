@@ -9,7 +9,7 @@ export interface Produto {
   unMedida: string;
   qntMin: number;
   qntEstoque: number;
-  status: 'ativo' | 'inativo';
+  status: 'Ativo' | 'Inativo';
 }
 
 @Injectable({ providedIn: 'root' })
@@ -18,16 +18,13 @@ export class ProdutoService {
   private readonly API = '/api/produtos';
 
   constructor(private http: HttpClient) {}
-
+  
   listAll(): Observable<Produto[]> {
     return this.http.get<Produto[]>(this.API);
   }
 
   create(data: Produto): Observable<Produto> {
     return this.http.post<Produto>(this.API, data)
-      .pipe(
-        tap(() => console.log('Produto criado', data))
-      );
   }
 
   update(id: string, date: Partial<Produto>): Observable<Produto> {

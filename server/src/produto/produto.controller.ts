@@ -1,13 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, NotFoundException, Query } from '@nestjs/common';
+
 import { ProdutoService } from './produto.service';
 import { Produto } from '@prisma/client';
 
 @Controller('produtos')
 export class ProdutoController {
-    constructor(private service: ProdutoService) {}
+    constructor(private readonly service: ProdutoService) {}
 
     @Get()
-    findAll(): Promise<Produto[]>{
+    findAll(): Promise<Produto[]> {
         return this.service.findAll();
     }
 
