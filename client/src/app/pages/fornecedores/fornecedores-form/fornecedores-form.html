@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="lateral"></div>
+
+  <div class="form-container">
+    <div class="superior">
+      <div class="header">
+        <div class="add"></div>
+        <h3>{{ editing ? 'Editar Fornecedor' : 'Adicionar Novo Fornecedor' }}</h3>
+      </div>
+
+      <div class="button">
+        <button mat-flat-button type="submit" form="fornecedorForm">Salvar</button>
+      </div>
+
+    </div>
+
+    <mat-divider></mat-divider>
+    
+    <form [formGroup]="form" (ngSubmit)="save()" id="fornecedorForm" mat-dialog-content>
+
+      <div class="line">
+        <div class="input">
+            <span>Razão Social</span>
+            <mat-form-field appearance="outline" class="full medium">
+                <input matInput formControlName="razaoSocial" required />
+            </mat-form-field>
+        </div>
+  
+        <div class="input">
+            <span>CNPJ</span>
+            <mat-form-field appearance="outline" class="full medium">
+              <input matInput formControlName="cnpj" required />
+            </mat-form-field>
+        </div>
+      </div>
+      
+      <div class="input">
+        <span>Endereço</span>
+        <mat-form-field appearance="outline" class="full big">
+          <input matInput formControlName="endereco" required />
+        </mat-form-field>
+      </div>
+
+      <div class="line">
+        <div class="input">
+            <span>Telefone</span>
+            <mat-form-field appearance="outline" class="full medium">
+              <input matInput formControlName="telefone" required />
+            </mat-form-field>
+        </div>
+
+        <div class="input">
+            <span>E-mail</span>
+            <mat-form-field appearance="outline" class="full medium">
+                <input matInput formControlName="email" required />
+            </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,34 +1,18 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDividerModule } from '@angular/material/divider';
 
+import { SHARED_FORM_IMPORTS } from '../../../shared/shared-imports/shared-form-imports';
 import { Produto, ProdutoService } from '../../../services/produto';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatOptionModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-produtos-form',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDividerModule, 
-    MatOptionModule,
-    MatSlideToggleModule,
-    MatSelectModule
+    ...SHARED_FORM_IMPORTS
   ],
   templateUrl: './produtos-form.html',
   styleUrl: './produtos-form.scss'
@@ -40,7 +24,6 @@ export class ProdutosForm implements OnInit {
   constructor(
     private fb: FormBuilder,
     private produtoService: ProdutoService,
-    private router: Router,
     private dialogRef: MatDialogRef<ProdutosForm>,
     @Inject(MAT_DIALOG_DATA) public data: { produto?: Produto }
   ) {}
@@ -67,33 +50,32 @@ export class ProdutosForm implements OnInit {
   }
 
   save() {
-  if (this.form.invalid) {
-    return;
-  } 
+    if (this.form.invalid) {
+      return;
+    } 
 
-  const raw = this.form.value;
+    const raw = this.form.value;
 
-  const data = {
-    ...raw,
-    status: raw.status ? 'Ativo' : 'Inativo'
-  }
+    const data = {
+      ...raw,
+      status: raw.status ? 'Ativo' : 'Inativo'
+    }
 
-  if (this.editing) {
-    const id = this.data.produto?.idProduto as string;
-    console.log('Atualizando produto id:', id);
+    if (this.editing) {
+      const id = this.data.produto?.idProduto as string;
+      console.log('Atualizando produto id:', id);
 
-    this.produtoService.update(id, data).subscribe({
-      next: (res) => {
-        this.dialogRef.close('update')
-        console.log('Update sucesso:', res);
-      },
-      error: (err) => console.error('Erro ao atualizar produto', err)
-    })
-  } else {
-    this.produtoService.create(data).subscribe({
-      next: () => this.dialogRef.close('update'),
-      error: (err) => console.error('Erro ao criar produto', err)
-    })
-  }
+      this.produtoService.update(id, data).subscribe({
+        next: () => {
+          this.dialogRef.close('update')
+        },
+        error: (err) => console.error('Erro ao atualizar produto', err)
+      })
+    } else {
+      this.produtoService.create(data).subscribe({
+        next: () => this.dialogRef.close('update'),
+        error: (err) => console.error('Erro ao criar produto', err)
+      })
+    }
   }
 }

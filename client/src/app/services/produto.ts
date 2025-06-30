@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 export interface Produto {
   idProduto: string;
@@ -27,8 +27,8 @@ export class ProdutoService {
     return this.http.post<Produto>(this.API, data)
   }
 
-  update(id: string, date: Partial<Produto>): Observable<Produto> {
-    return this.http.patch<Produto>(`/api/produtos/${id}`, date);
+  update(id: string, data: Partial<Produto>): Observable<Produto> {
+    return this.http.patch<Produto>(`/api/produtos/${id}`, data);
   }
 
   searchForId(id: string): Observable<Produto> {

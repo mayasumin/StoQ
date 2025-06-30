@@ -3,7 +3,7 @@ import { Controller, Get, Post, Body, Patch, Param, NotFoundException } from '@n
 import { FornecedorService } from './fornecedor.service';
 import { Fornecedor } from '@prisma/client';
 
-@Controller('fornecedor')
+@Controller('fornecedores')
 export class FornecedorController {
   constructor(private readonly service: FornecedorService) {}
 

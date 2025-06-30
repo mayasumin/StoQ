@@ -9,7 +9,7 @@
       </div>
 
       <div class="button">
-        <button mat-flat-button color="primary" (click)="openModalNewProduct()">
+        <button mat-flat-button color="primary" (click)="openModalNewProduto()">
           Adicionar Novo Produto
         </button>
       </div>
@@ -52,7 +52,7 @@
         <ng-container matColumnDef="editar">
           <th mat-header-cell *matHeaderCellDef>Editar</th>
           <td mat-cell *matCellDef="let item">
-            <button mat-icon-button color="primary" (click)="openModalEditProduct(item)">
+            <button mat-icon-button color="primary" (click)="openModalEditProduto(item)">
               <mat-icon>edit</mat-icon>
             </button>
           </td>
@@ -68,7 +68,6 @@
         showFirstLastButtons
       ></mat-paginator>
     </div>
-
 
     <div *ngIf="error" class="error">{{ error }}</div>
   </div>

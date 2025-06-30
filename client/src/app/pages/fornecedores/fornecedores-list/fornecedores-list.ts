@@ -2,36 +2,36 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 
 import { SHARED_TABLE_IMPORTS } from '../../../shared/shared-imports/shared-table-imports';
-import { ProdutoService, Produto } from '../../../services/produto';
-import { ProdutosForm } from '../produtos-form/produtos-form';
+import { FornecedorService, Fornecedor } from '../../../services/fornecedor';
+import { FornecedoresForm } from '../fornecedores-form/fornecedores-form';
 
 @Component({
-  selector: 'app-produtos-list',
+  selector: 'app-fornecedores-list',
   standalone: true,
   imports: [
     CommonModule,
     ...SHARED_TABLE_IMPORTS
   ],
-  templateUrl: './produtos-list.html',
-  styleUrl: './produtos-list.scss'
+  templateUrl: './fornecedores-list.html',
+  styleUrl: './fornecedores-list.scss'
 })
-export class ProdutosList implements OnInit, AfterViewInit {
-  dataSource = new MatTableDataSource<Produto>([]);
-  displayedColumns = ['nome','descricao','unMedida','qntMin','qntEstoque','status','editar'];
-
+export class FornecedoresList implements OnInit, AfterViewInit{
+  dataSource = new MatTableDataSource<Fornecedor>([]);
+  displayedColumns = ['razaoSocial', 'cnpj', 'endereco', 'telefone', 'email', 'editar'];
+  
   error?: string;
   loading = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor (
-    private produtoService: ProdutoService,
+  constructor(
+    private fornecedorService: FornecedorService,
     private dialog: MatDialog
-  ) {}    
+  ) {}
   
   ngOnInit(): void {
     this.loadPage();
@@ -43,45 +43,45 @@ export class ProdutosList implements OnInit, AfterViewInit {
 
   loadPage(): void {
     this.loading = true;
-    this.produtoService.listAll().subscribe({
+    this.fornecedorService.listAll().subscribe({
       next: list => {
         this.dataSource.data = list;
         this.loading = false;
       },
       error: () => {
-        this.error = 'Erro ao carregar produtos.';
+        this.error = 'Erro ao carregar fornecedores.';
         this.loading = false;
       }
     });
   }
 
-  openModalNewProduto(): void {
-    const dialogRef = this.dialog.open(ProdutosForm, {
+  openModalNewFornecedor() {
+    const dialogRef = this.dialog.open(FornecedoresForm, {
       width: '51rem',
-      height: '29rem',
+      height: '25rem',
       panelClass: 'modal-stoq',
       data: null
     });
 
     dialogRef.afterClosed().subscribe((res) => {
-      if (res === 'update') {
+      if (res == 'update') {
         this.loadPage();
       }
-    });
+    })
   }
 
-  openModalEditProduto(produto: Produto) {
-    const dialogRef = this.dialog.open(ProdutosForm, {
+  openModalEditFornecedor(fornecedor: Fornecedor) {
+    const dialogRef = this.dialog.open(FornecedoresForm, {
       width: '51rem',
-      height: '29rem',
+      height: '25rem',
       panelClass: 'modal-stoq',
-      data: { produto }
+      data: { fornecedor }
     });
 
     dialogRef.afterClosed().subscribe((res) => {
-      if (res === 'update') {
+      if (res == 'update') {
         this.loadPage();
       }
-    });
+    })
   }
 }
