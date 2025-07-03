@@ -9,7 +9,9 @@
       </div>
 
       <div class="button">
-        <button mat-flat-button type="submit" form="produtoForm">Salvar</button>
+        <button mat-flat-button type="submit" form="produtoForm" [disabled]="form.invalid">
+          Salvar
+        </button>
       </div>
 
     </div>

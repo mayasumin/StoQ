@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-estoque',
+  selector: 'app-nota-fiscal-list',
   imports: [
     RouterModule
   ],
-  templateUrl: './estoque.html',
-  styleUrl: './estoque.scss'
+  templateUrl: './nota-fiscal-list.html',
+  styleUrl: './nota-fiscal-list.scss'
 })
-export class Estoque {
+export class NotaFiscalList {
 
 }

@@ -49,11 +49,9 @@ export class ProdutosForm implements OnInit {
     }
   }
 
-  save() {
-    if (this.form.invalid) {
-      return;
-    } 
-
+  save(): void {
+    if (this.form.invalid) return;
+ 
     const raw = this.form.value;
 
     const data = {
