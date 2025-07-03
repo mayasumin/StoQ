@@ -4,9 +4,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { MatDialogRef } from '@angular/material/dialog';
 
-import { SHARED_FORM_IMPORTS } from '../../shared/shared-imports/shared-form-imports';
-import { Produto, ProdutoService } from '../../services/produto';
-import { Item } from '../../services/nota-fiscal';
+import { SHARED_FORM_IMPORTS } from '../../../shared/shared-imports/shared-form-imports';
+import { Produto, ProdutoService } from '../../../services/produto';
+import { Item } from '../../../services/nota-fiscal';
 
 @Component({
   selector: 'app-itens-modal',

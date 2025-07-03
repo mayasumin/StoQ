@@ -12,7 +12,14 @@ export class NotaFiscalService {
         numero: string;
         serie: string;
         dataEmissao: Date;
-        fornecedor: { razaoSocial: string }
+        fornecedor: { razaoSocial: string };
+        itens: {
+            qntdRecebida: number;
+            precoUnit: number;
+            ncm: string | null;
+            cfop: string| null;
+            produto: { nome: string }
+        }[],
     }[]> {
         return this.prisma.notaFiscal.findMany({
             select: {
@@ -24,11 +31,21 @@ export class NotaFiscalService {
                     select: {
                         razaoSocial: true
                     }
-                }
+                },
+                itens: {
+                    select: {
+                        qntdRecebida: true,
+                        precoUnit: true,
+                        ncm: true,
+                        cfop: true,
+                        produto: {
+                            select: {
+                                nome: true
+                            }
+                        }
+                    }
+                }    
             },
-            orderBy: {
-                dataEmissao: 'desc'
-            }
         });
     }
 

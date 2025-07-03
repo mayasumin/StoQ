@@ -1,0 +1,59 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.container {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    .lateral {
+        width: 4.5rem;
+        display: flex;
+        justify-content: center;
+        padding-top: 1rem;
+
+        background-image: url('../../../../assets/img/lateral.png');
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .right {
+        width: 100%;
+
+        h3 {
+            color: $primary;
+            padding: .5rem 1.5rem;
+        }
+
+        .table {
+            width: 100%;
+            padding-top: 1remx;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            table.mat-mdc-table {
+                min-width: 100%;
+                border: 1px solid $primary;
+                border-radius: .5rem;
+                min-width: 90%;
+        
+                th, td {
+                    text-align: center;
+                    padding: 0.5rem 1rem;
+                }
+        
+                th {
+                    background-color: $white;
+                    color: $primary;
+                    font-weight: 600;
+                }
+        
+                  tr:nth-child(even) td {
+                    background-color: #F2F0F0;
+                }
+            }
+        }
+    }
+}

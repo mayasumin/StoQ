@@ -9,7 +9,7 @@ import { SHARED_TABLE_IMPORTS } from '../../../shared/shared-imports/shared-tabl
 
 import { FornecedorService, Fornecedor } from '../../../services/fornecedor';
 import { NotaFiscalService, Item, NotaFiscalHeader } from '../../../services/nota-fiscal';
-import { ItensModal } from '../../itens-modal/itens-modal';
+import { ItensModal } from '../../itens/itens-modal/itens-modal';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';

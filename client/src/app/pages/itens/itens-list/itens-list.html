@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="lateral"></div>
+
+    <div class="right">
+        <h3>Itens da Nota Fiscal</h3>
+
+        <mat-divider></mat-divider>
+
+        <div class="table">
+            <table mat-table [dataSource]="dataSource">
+            
+              <ng-container matColumnDef="produto">
+                <th mat-header-cell *matHeaderCellDef>Produto</th>
+                <td mat-cell *matCellDef="let item">{{ item.produto?.nome }}</td>
+              </ng-container>
+            
+              <ng-container matColumnDef="qntdRecebida">
+                <th mat-header-cell *matHeaderCellDef>Qtd</th>
+                <td mat-cell *matCellDef="let item">{{ item.qntdRecebida }}</td>
+              </ng-container>
+            
+              <ng-container matColumnDef="precoUnit">
+                <th mat-header-cell *matHeaderCellDef>Preço Unit</th>
+                <td mat-cell *matCellDef="let item">{{ item.precoUnit | currency:'BRL' }}</td>
+              </ng-container>
+            
+              <tr mat-header-row *matHeaderRowDef="['produto', 'qntdRecebida', 'precoUnit']"></tr>
+              <tr mat-row *matRowDef="let row; columns: ['produto', 'qntdRecebida', 'precoUnit']"></tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+

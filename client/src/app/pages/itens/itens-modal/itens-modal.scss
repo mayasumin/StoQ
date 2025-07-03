@@ -1,5 +1,5 @@
-@use '../../styles/variables' as *;
-@use '../../styles/mixins' as *;
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
 
 :host ::ng-deep .mat-mdc-form-field-flex {
   height: 2rem !important;
@@ -48,7 +48,7 @@
         justify-content: center;
         padding-top: 1rem;
 
-        background-image: url('../../../assets/img/lateral.png');
+        background-image: url('../../../../assets/img/lateral.png');
         background-repeat: no-repeat;
         background-position: center;
     }
@@ -64,7 +64,7 @@
             justify-content: space-between;
             align-items: center;
             
-            padding: .5rem 1.5rem .5rem 1.5rem;
+            padding: .5rem 1.5rem;
 
             .header {
                 display: flex;
@@ -74,7 +74,7 @@
                 .add {
                     width: 1.5rem;
                     height: 1.5rem;
-                    background-image: url('../../../assets/svg/add_circle.svg');
+                    background-image: url('../../../../assets/svg/add_circle.svg');
                     background-repeat: no-repeat;
                     background-position: center;
                 }
