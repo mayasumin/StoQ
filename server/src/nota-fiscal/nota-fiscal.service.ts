@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 
 import { Fornecedor, Item, NotaFiscal } from '@prisma/client';
@@ -48,7 +48,7 @@ export class NotaFiscalService {
             },
         });
     }
-
+    
     findItensByNota(idNF: string): Promise<Item[]> {
         return this.prisma.item.findMany({
             where: { notafiscalId: idNF },
@@ -91,6 +91,48 @@ export class NotaFiscalService {
                 })) }
             },
             include: { itens: true, fornecedor: true }
+        })
+    }
+
+    listNotasItensPendentes() {
+        return this.prisma.notaFiscal.findMany({
+            where: {
+                itens: {
+                    some: {
+                        baixado: false
+                    }
+                }
+            },
+            include: {
+                fornecedor: true
+            },
+        })
+        .catch (err => {
+            console.error('Erro ao buscar notas pendentes:', err);
+            throw new InternalServerErrorException('Erro ao listar notas');
+        })
+    }
+
+    listItensPendentes(idNF: string) {
+        return this.prisma.item.findMany({
+            where: {
+                notafiscalId: idNF,
+                baixado: false
+            }, 
+            include: {
+                produto: true
+            },
+        })
+        .then(itens => {
+            if (!itens.length) {
+                throw new NotFoundException(`Nenhum item pendente encontrado para a nota ${idNF}`);
+            }
+            return itens;
+        })
+        .catch(err => {
+            if (err instanceof NotFoundException) throw err;
+            console.error('Erro ao buscar itens pendentes', err);
+            throw new InternalServerErrorException('Erro ao listar itens');
         })
     }
 }

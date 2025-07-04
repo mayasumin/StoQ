@@ -16,7 +16,6 @@ model Produto {
   status String @default("Ativo")
   itens Item[]
   movimentacoes Movimentacao[]
-  lotes Lote[]
   alertasEstoque AlertaEstoque[]
 }
 
@@ -42,6 +41,7 @@ model NotaFiscal {
 
 model Item {
   idItem String @id @default(uuid())
+  baixado Boolean @default(false)
   notaFiscal NotaFiscal @relation(fields: [notafiscalId], references: [idNF])
   notafiscalId String
   produto Produto @relation(fields: [produtoId], references: [idProduto])
@@ -57,8 +57,6 @@ model Lote {
   idLote String @id @default(uuid())
   item Item @relation(fields: [itemId], references: [idItem])
   itemId String
-  produto Produto @relation(fields: [produtoId], references: [idProduto])
-  produtoId String
   numero String
   dataEntrada DateTime
   dataValidade DateTime
@@ -76,7 +74,7 @@ model Movimentacao {
   lote Lote @relation(fields: [loteId], references: [idLote])
   loteId String
   qntRetirada Int
-  dataHora DateTime
+  dataHora DateTime @default(now())
   responsavel String
   observacoes String?
 }

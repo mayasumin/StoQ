@@ -7,7 +7,7 @@ export class NotaFiscalController {
     constructor(private readonly service: NotaFiscalService) {}
 
     @Get()
-    findAll(): Promise<Partial<NotaFiscal>[]>  {
+    findAll(): Promise<Partial<NotaFiscal>[]> {
         return this.service.findAll();
     }
 
@@ -16,6 +16,18 @@ export class NotaFiscalController {
         @Param('id') id: string
     ): Promise<Item[]> {
         return this.service.findItensByNota(id);
+    }
+
+    @Get('pendentes')
+    listNotasPendentes() {
+        return this.service.listNotasItensPendentes();
+    }
+
+    @Get(':idNF/itens-pendentes')
+    listItensPendentes(
+        @Param('idNF') idNF: string
+    ) {
+        return this.service.listItensPendentes(idNF);
     }
 
     @Post()
