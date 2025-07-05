@@ -6,7 +6,7 @@ import { Item, NotaFiscalHeader, NotaFiscalService } from '../../../services/not
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
-import { ItensList } from '../../itens/itens-list/itens-list';
+import { ItensList } from '../dialogs/itens-list/itens-list';
 
 @Component({
   selector: 'app-nota-fiscal-list',
@@ -58,7 +58,7 @@ export class NotaFiscalList implements OnInit, AfterViewInit {
     console.log('Abrindo modal com itens:', itens);
 
     this.dialog.open(ItensList, {
-      width: '51rem',
+      width: '58rem',
       height: '25rem',
       panelClass: 'modal-stoq',
       data: itens

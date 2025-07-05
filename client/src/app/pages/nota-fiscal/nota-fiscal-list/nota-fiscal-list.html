@@ -39,7 +39,7 @@
 
                 <ng-container matColumnDef="dataEmissao">
                     <th mat-header-cell *matHeaderCellDef>Data de Emissão</th>
-                    <td mat-cell *matCellDef="let nota">{{ nota.dataEmissao }}</td>
+                    <td mat-cell *matCellDef="let nota">{{ nota.dataEmissao | date: 'dd/MM/yyyy' }}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="detalhes">
@@ -53,6 +53,8 @@
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <div *ngIf="error" class="error">{{ error }}</div>
             </table>
 
             <mat-paginator 
@@ -62,6 +64,5 @@
             ></mat-paginator>
         </div>
 
-        <div *ngIf="error" class="error">{{ error }}</div>
     </div>
 </div>

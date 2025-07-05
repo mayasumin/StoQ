@@ -1,5 +1,5 @@
-@use '../../../styles/variables' as *;
-@use '../../../styles/mixins' as *;
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
 
 .container {
     width: 100%;
@@ -12,8 +12,9 @@
         display: flex;
         justify-content: center;
         padding-top: 1rem;
-
-        background-image: url('../../../../assets/img/lateral.png');
+        
+        background-color: $secondary;
+        background-image: url('../../../../../assets/img/lateral.png');
         background-repeat: no-repeat;
         background-position: center;
     }
@@ -28,8 +29,9 @@
 
         .table {
             width: 100%;
-            padding-top: 1remx;
+            padding-top: 1rem;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
 
@@ -37,11 +39,10 @@
                 min-width: 100%;
                 border: 1px solid $primary;
                 border-radius: .5rem;
-                min-width: 90%;
+                min-width: 75%;
         
                 th, td {
                     text-align: center;
-                    padding: 0.5rem 1rem;
                 }
         
                 th {
@@ -50,9 +51,14 @@
                     font-weight: 600;
                 }
         
-                  tr:nth-child(even) td {
+                tr {
+                    height: 2.5rem;
+                }
+
+                tr:nth-child(even) td {
                     background-color: #F2F0F0;
                 }
+
             }
         }
     }

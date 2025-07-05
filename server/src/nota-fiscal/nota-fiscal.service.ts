@@ -104,8 +104,22 @@ export class NotaFiscalService {
                 }
             },
             include: {
-                fornecedor: true
+                fornecedor: true,
+                itens: {
+                    where: { baixado: false },
+                    select: { idItem: true }
+                }
             },
+        })
+        .then(notas => {
+            return notas.map(nota => ({
+                idNF: nota.idNF,
+                numero: nota.numero,
+                serie: nota.serie,
+                dataEmissao: nota.dataEmissao,
+                fornecedor: nota.fornecedor,
+                itensPendentes: nota.itens.length
+            }));
         })
         .catch (err => {
             console.error('Erro ao buscar notas pendentes:', err);

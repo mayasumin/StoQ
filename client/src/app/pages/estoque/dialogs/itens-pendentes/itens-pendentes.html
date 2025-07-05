@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="lateral"></div>
+
+  <div class="container-right">
+    <div class="superior">
+      <div class="header">
+        <div class="add"></div>
+        <h2>Entrada de Novo Lote</h2>
+      </div>
+    
+      <mat-dialog-actions class="buttons">
+        <button mat-button (click)="cancel()">Cancelar</button>
+      </mat-dialog-actions>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="list-container">
+      <div class="header-container">
+        <h3>Itens Pendentes</h3>
+        <p>Selecione o item que deseja dar entrada no estoque (um por vez)</p>
+      </div>
+      <mat-dialog-content>
+        <mat-list class="list">
+          <mat-list-item *ngFor="let item of itens" (click)="selectItem(item)" class="item">
+            {{ item.produto.nome }}
+          </mat-list-item>
+        </mat-list>
+      </mat-dialog-content>
+    </div>
+  </div>
+</div>

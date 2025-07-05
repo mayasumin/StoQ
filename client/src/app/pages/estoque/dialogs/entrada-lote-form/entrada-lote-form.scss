@@ -1,5 +1,5 @@
-@use '../../../styles/variables' as *;
-@use '../../../styles/mixins' as *;
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
 
 :host ::ng-deep .mat-mdc-form-field-flex {
   height: 2rem !important;
@@ -36,26 +36,22 @@
   display: none !important;
 }
 
+*{
+    padding: 0;
+    margin: 0;
+}
+
 .container {
     width: 100%;
-    height: 100%;
-
     display: flex;
 
     .lateral {
-        width: 4.5rem;
-        display: flex;
-        justify-content: center;
-        padding-top: 1rem;
+        width: 4rem;
 
-        background-image: url('../../../../assets/img/lateral.png');
-        background-repeat: no-repeat;
-        background-position: center;
+        background-color: $secondary;
     }
 
-    .form-container {
-        width: 100%;
-        
+    .page-container {
         display: flex;
         flex-direction: column;
 
@@ -63,8 +59,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            
-            padding: .5rem 1.5rem;
+
+            padding: 1rem .5rem;
 
             .header {
                 display: flex;
@@ -74,19 +70,20 @@
                 .add {
                     width: 1.5rem;
                     height: 1.5rem;
-                    background-image: url('../../../../assets/svg/add_circle.svg');
+                    background-image: url('../../../../../assets/svg/add_circle.svg');
                     background-repeat: no-repeat;
                     background-position: center;
                 }
 
-                h3 {
+                h2 {
                     color: $primary;
+                    font-size: 20px;
                 }
             }
 
-            .button {
+            .buttons {
                 button {
-                    width: 7.5rem;
+                    width: 5.5rem;
                     height: 2.75rem;
 
                     border-radius: .5rem;
@@ -96,30 +93,25 @@
             }
         }
 
-        form {
-            height: 100%;
-            padding: 1.5rem;
-
-            .input {
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                justify-content: left;
-                gap: .5rem;
-            }
-
-            .line {
-                display: flex;
-                justify-content: space-between;
+        .form-container {
+            form {
+                .line {
+                    display: flex;
+                    justify-content: space-between;
+                }
 
                 .input {
-                    width: 48%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: left;
+                    gap: .5rem;
                 }
-            }
 
-            span {
-                font-weight: 400;
-                color: $secondary;
+                span {
+                    font-weight: 400;
+                    color: $secondary;
+                }
+
             }
         }
     }

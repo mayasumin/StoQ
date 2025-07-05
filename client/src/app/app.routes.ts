@@ -8,7 +8,7 @@ import { FornecedoresForm } from './pages/fornecedores/fornecedores-form/fornece
 import { Estoque } from './pages/estoque/estoque';
 import { PoliticaSaida } from './pages/politica-saida/politica-saida';
 import { NotaFiscalList } from './pages/nota-fiscal/nota-fiscal-list/nota-fiscal-list';
-import { NotaFiscalForm } from './pages/nota-fiscal/nota-fiscal-form/nota-fiscal-form';
+import { NotaFiscalForm } from './pages/nota-fiscal/nota-fiscal-form/nota-fiscal-form';;
 
 export const routes: Routes = [  
     { path: 'dashboard', component: Dashboard },

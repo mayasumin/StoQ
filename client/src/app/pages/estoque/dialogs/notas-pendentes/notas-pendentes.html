@@ -1,0 +1,63 @@
+<div class="container">
+    <div class="lateral"></div>
+
+    <div class="container-right">
+        <div class="superior">
+            <div class="header">
+                <div class="add"></div>
+                <h2>Entrada de Novo Lote</h2>
+            </div>
+    
+            <mat-dialog-actions class="buttons">
+                <button mat-button (click)="cancel()">Cancelar</button>
+                <button mat-flat-button color="primary" [disabled]="notasSelecionadas.length === 0" (click)="confirm()">Continuar</button>
+            </mat-dialog-actions>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="table-container">
+            <div class="header-table">
+                <h3 mat-dialog-title>Notas Fiscais Pendentes</h3>
+                <p>Selecione as Notas Fiscais em que deseja dar baixa</p>
+            </div>
+
+            <div class="table">
+                <table mat-table [dataSource]="notas">
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let nota">
+                            <mat-checkbox
+                                (change)="toggleNota(nota)"
+                                [checked]="isSelect(nota)"
+                            ></mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef>ID</th>
+                        <td mat-cell *matCellDef="let nota">{{ getIdCurto(nota.idNF) }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="fornecedor">
+                        <th mat-header-cell *matHeaderCellDef>Fornecedor</th>
+                        <td mat-cell *matCellDef="let nota">{{ nota.fornecedor.razaoSocial }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="data">
+                        <th mat-header-cell *matHeaderCellDef>Data de Emissão</th>
+                        <td mat-cell *matCellDef="let nota">{{ nota.dataEmissao | date: 'dd/MM/yy' }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="pendentes">
+                        <th mat-header-cell *matHeaderCellDef>Itens pendentes</th>
+                        <td mat-cell *matCellDef="let nota">{{ nota.itensPendentes }}</td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

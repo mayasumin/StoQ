@@ -1,0 +1,86 @@
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+
+    .lateral {
+        height: 100%;
+        width: 4rem;
+
+        background-color: $secondary;
+    }
+
+    .container-right {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .superior {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 1rem .5rem;
+
+            .header {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+
+                .add {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    background-image: url('../../../../../assets/svg/add_circle.svg');
+                    background-repeat: no-repeat;
+                    background-position: center;
+                }
+
+                h2 {
+                    color: $primary;
+                }
+            }
+
+            .buttons {
+                button {
+                    width: 5rem;
+                    height: 2.75rem;
+
+                    border-radius: .5rem;
+                    background-color: rgba(164, 180, 101, 0.75);
+                    color: white;
+                }
+            }
+        }
+
+        .list-container {
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem 1.5rem 0 1.5rem;
+
+            .header-container {
+                h3 {
+                    color: $secondary;
+                    font-size: 20px;
+                }
+
+                p {
+                    color: $terciary;
+                    font-size: 15px;
+                }
+            }
+
+            .item {
+                background-color: #f9f9f9;
+                border-bottom: 1px solid #ddd;
+            }
+        }
+    }
+}

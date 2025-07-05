@@ -9,6 +9,10 @@ export interface Item {
   qntdRecebida: string;
   ncm?: string;
   cfop?: string;
+  produto: {
+    idProduto: string;
+    nome: string;
+  }
 }
 
 export interface NotaFiscalHeader {
@@ -19,7 +23,8 @@ export interface NotaFiscalHeader {
   numero: string;
   serie: string;
   dataEmissao: Date;
-  itens?: Item[]
+  itens?: Item[];
+  itensPendentes: number
 }
 
 @Injectable({ providedIn: 'root' })
