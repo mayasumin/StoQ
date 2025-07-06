@@ -1,9 +1,14 @@
 import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { Lote, Produto, Retirada } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma.service';
+import { ConfiguracoesService } from 'src/configuracoes/configuracoes.service';
 
 @Injectable()
 export class EstoqueService {
-    constructor(private readonly prisma: PrismaService) {}
+    constructor(
+        private readonly prisma: PrismaService,
+        private configService: ConfiguracoesService
+    ) {}
 
     registerEntradaLote(data: {
         itemId: string;
@@ -30,12 +35,12 @@ export class EstoqueService {
                     const lote = await prisma.lote.create({
                         data: { 
                             itemId,
+                            produtoId: item.produtoId,
                             numero: numeroLote,
                             dataEntrada: new Date(),
                             dataValidade,
                             qtdRecebida,
-                            localArmazenamento,
-                            observacoes
+                            localArmazenamento
                         }
                     });
 
@@ -72,4 +77,105 @@ export class EstoqueService {
                 throw new InternalServerErrorException('Erro ao registrar entrada de lote');
             })
     }
+
+    getProdutosComEstoque(): Promise<(Produto & { lotes: Lote[] })[]> {
+        return this.prisma.produto.findMany({
+            where: {
+                qntEstoque: { gt: 0 }
+            },
+            include: {
+                lotes: true
+            }
+        })
+    }
+
+    sugestLote(produtoId: string): Promise<(Lote & { retiradas: Retirada[] }) | null>  {
+        return this.configService.getPoliticaSaida()
+        .then(politica => {
+            return this.prisma.lote.findMany({
+                where: { produtoId },
+                include: {
+                    retiradas: true
+                },
+                orderBy: politica === 'PVPS' ? { dataValidade: 'asc' } : { dataEntrada: 'asc' }
+            })
+            .then(lotes => {
+                const loteDisponivel = lotes.find(lote => {
+                    const totalRetirado = lote.retiradas.reduce((soma, r) => soma + r.qtdRetirada, 0)
+                    return lote.qtdRecebida > totalRetirado;
+                });
+
+                return loteDisponivel || null
+            })
+        })
+    }
+
+    registerRetirada(data: {
+        produtoId: string;
+        loteId: string;
+        quantidade: number;
+        responsavel: string
+    }): Promise<[Retirada, Produto]> {
+        return this.prisma.lote.findUnique({
+            where: {idLote: data.loteId },
+            include: { retiradas: true },
+        })
+        .then(lote => {
+            if (!lote || typeof lote.qtdRecebida !== 'number') {
+                return  Promise.reject(new BadRequestException('Lote inválido ou corrompido.'));
+            }
+            const totalRetirado = lote.retiradas.reduce((soma, r) => soma + r.qtdRetirada, 0);
+            const disponivel = lote.qtdRecebida - totalRetirado
+
+            if (data.quantidade > disponivel) {
+                return Promise.reject(new BadRequestException('Quantidade insuficiente no lote.'));
+            }
+
+            return this.prisma.$transaction([
+                this.prisma.retirada.create({
+                    data: {
+                        produtoId: data.produtoId,
+                        loteId: data.loteId,
+                        qtdRetirada: data.quantidade,
+                        responsavel: data.responsavel,
+                        dataHora: new Date(),
+                    },
+                }),
+                this.prisma.produto.update({
+                    where: { idProduto: data.produtoId },
+                    data: {
+                        qntEstoque: {
+                            decrement: data.quantidade,
+                        },
+                    },
+                }), 
+            ]) as Promise<[Retirada, Produto]>
+        })
+    }
+
+    getHistoricoRetiradas(): Promise<
+    (Retirada & {
+        produto: { nome: string };
+        lote: { numero: string; dataValidade: Date }
+    })[]> {
+        return this.prisma.retirada.findMany({
+            include: {
+                produto: {
+                    select: {
+                        nome: true
+                    }
+                },
+                lote: {
+                    select: {
+                        numero: true,
+                        dataValidade: true
+                    },
+                },
+            },
+            orderBy: {
+                dataHora: 'desc'
+            }
+        })
+    }
+
 }

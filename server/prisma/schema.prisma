@@ -6,16 +6,24 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum PoliticaSaida {
+  FIFO
+  PVPS
+}
+
 model Produto {
   idProduto String @id @default(uuid())
   nome String
   descricao String?
   unMedida String?
   qntMin Int
+  observacoes String?
   qntEstoque Int
   status String @default("Ativo")
   itens Item[]
+  lotes Lote[]
   movimentacoes Movimentacao[]
+  retiradas Retirada[]
   alertasEstoque AlertaEstoque[]
 }
 
@@ -57,13 +65,15 @@ model Lote {
   idLote String @id @default(uuid())
   item Item @relation(fields: [itemId], references: [idItem])
   itemId String
+  produtoId String
+  produto Produto @relation(fields: [produtoId], references: [idProduto])
   numero String
   dataEntrada DateTime
   dataValidade DateTime
   qtdRecebida Int
   localArmazenamento String?
-  observacoes String?
   movimentacoes Movimentacao[]
+  retiradas Retirada[]
   alertasValidade AlertaValidade[]
 }
 
@@ -79,9 +89,20 @@ model Movimentacao {
   observacoes String?
 }
 
-model PoliticaSaida{
-  id String @id @default(uuid())
-  tipo String
+model Configuracao {
+  id Int @id @default(1)
+  politicaSaida PoliticaSaida @default(PVPS)
+}
+
+model Retirada {
+  idRetirada String @id @default(uuid())
+  produtoId String
+  loteId String
+  qtdRetirada Float
+  responsavel String
+  dataHora DateTime @default(now())
+  produto Produto @relation(fields: [produtoId], references: [idProduto])
+  lote Lote @relation(fields: [loteId], references: [idLote])
 }
 
 model AlertaEstoque {
