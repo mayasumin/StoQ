@@ -1,1 +1,24 @@
-<p>sugerir-lote works!</p>
+<h2 mat-dialog-title>Lote sugerido para: {{ data.produto.nome }}</h2>
+
+<mat-dialog-content *ngIf="loteSugerido; else erroTemplate">
+  <p><strong>Número do Lote:</strong> {{ loteSugerido.numero }}</p>
+  <p><strong>Data de Validade:</strong> {{ loteSugerido.dataValidade | date: 'shortDate' }}</p>
+  <p><strong>Quantidade Recebida:</strong> {{ loteSugerido.qtdRecebida }}</p>
+  <p><strong>Quantidade Retirada:</strong>
+    {{ totalRetirado }}
+  </p>
+  <p><strong>Disponível:</strong>
+    {{ disponivel }}
+  </p>
+</mat-dialog-content>
+
+<ng-template #erroTemplate>
+  <mat-dialog-content>
+    <p>{{ error }}</p>
+  </mat-dialog-content>
+</ng-template>
+
+<mat-dialog-actions align="end" *ngIf="loteSugerido">
+  <button mat-button (click)="nextLote()">Próximo Lote</button>
+  <button mat-raised-button color="primary" (click)="acceptLote()">Aceitar</button>
+</mat-dialog-actions>
