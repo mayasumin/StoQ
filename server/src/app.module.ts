@@ -8,6 +8,7 @@ import { FornecedorModule } from './fornecedor/fornecedor.module';
 import { NotaFiscalModule } from './nota-fiscal/nota-fiscal.module';
 import { EstoqueModule } from './estoque/estoque.module';
 import { ConfiguracoesModule } from './configuracoes/configuracoes.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { ConfiguracoesModule } from './configuracoes/configuracoes.module';
     FornecedorModule,
     NotaFiscalModule,
     EstoqueModule,
-    ConfiguracoesModule
+    ConfiguracoesModule,
+    DashboardModule
   ],
   controllers: [AppController],
   providers: [AppService],
