@@ -1,27 +1,49 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { NotasPendentes } from './dialogs/notas-pendentes/notas-pendentes';
 import { ItensPendentes } from './dialogs/itens-pendentes/itens-pendentes';
 import { EntradaLoteForm } from './dialogs/entrada-lote-form/entrada-lote-form';
 import { NotaFiscalHeader } from '../../services/nota-fiscal';
+import { SHARED_TABLE_IMPORTS } from '../../shared/shared-imports/shared-table-imports';
+import { EntradaEstoque } from '../../services/estoque';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-estoque',
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    ...SHARED_TABLE_IMPORTS
   ],
   templateUrl: './estoque.html',
   styleUrl: './estoque.scss'
 })
-export class Estoque {
+export class Estoque implements AfterViewInit {
+  displayedColumns: string[] = ['produto', 'lote', 'dataEntrada', 'dataValidade', 'qtdRecebida'];
+  dataSource = new MatTableDataSource<EntradaEstoque>([]);
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   constructor(
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private dialog: MatDialog
   ) {}
+
+  ngAfterViewInit(): void {
+      this.dataSource.paginator = this.paginator;
+  }
+
+  addEntradaHistorico(entrada: {
+    produtoNome: string;
+    qtdRecebida: number;
+    numeroLote: string;
+    dataValidade: string;
+    dataEntrada: string;
+  }) {
+    this.dataSource.data = [...this.dataSource.data, entrada];
+  }
 
   openModalEntradaLote(): void {
     this.dialog.open(NotasPendentes, {
@@ -54,7 +76,13 @@ export class Estoque {
           }).afterClosed()
           .subscribe(resultado => {
             if (resultado) {
-              this.snackBar.open('Lote adicionado com sucesso!', 'Fechar', { duration: 3000 })
+              this.addEntradaHistorico({
+                produtoNome: item.produto.nome,
+                qtdRecebida: item.qntdRecebida,
+                numeroLote: resultado.lote.numero,
+                dataValidade: new Date(resultado.lote.dataValidade).toLocaleDateString(),
+                dataEntrada: new Date(resultado.lote.dataEntrada).toLocaleDateString()
+              })
             }
           })
         })

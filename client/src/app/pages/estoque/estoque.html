@@ -1,6 +1,69 @@
-<button mat-button [routerLink]="['/notasdeentrada']">Notas de Entrada</button>
+<div class="container">
+  <div class="lateral"></div>
 
-<button mat-button color="primary" (click)="openModalEntradaLote()">
-  Entrada de Novo Lote
-</button>
+  <div class="table-container">
+    <div class="superior">
+      <div class="header">
+        <h1>Estoque</h1>
+        <p>Veja informações de todos os itens em estoque</p>
+      </div>
+
+      <div class="button">
+        <div class="line">
+          <button mat-button>Nova Retirada</button>
+          <button mat-button>Histórico de Retiradas</button>
+        </div>
+        <div class="line">
+          <button mat-button [routerLink]="['/notasdeentrada']">Notas de Entrada</button>
+          <button mat-button (click)="openModalEntradaLote()">Entrada de Novo Lote</button>
+        </div>
+
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="table">
+      <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="produto">
+          <th mat-header-cell *matHeaderCellDef>Produto</th>
+          <td mat-cell *matCellDef="let entrada">{{ entrada.produtoNome }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="lote">
+          <th mat-header-cell *matHeaderCellDef>Lote</th>
+          <td mat-cell *matCellDef="let entrada">{{ entrada.numeroLote }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="dataEntrada">
+          <th mat-header-cell *matHeaderCellDef>Data de Entrada</th>
+          <td mat-cell *matCellDef="let entrada">{{ entrada.dataEntrada }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="dataValidade">
+          <th mat-header-cell *matHeaderCellDef>Data de Validade</th>
+          <td mat-cell *matCellDef="let entrada">{{ entrada.dataValidade }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="qtdRecebida">
+          <th mat-header-cell *matHeaderCellDef>Qtd Recebida</th>
+          <td mat-cell *matCellDef="let entrada">{{ entrada.qtdRecebida }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <mat-paginator
+        [pageSize]="6"
+        [pageSizeOptions]="[]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+  </div>
+</div>
+
+
+
+
 

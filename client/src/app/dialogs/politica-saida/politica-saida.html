@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="lateral"></div>
+
+    <div class="container-form">
+        <div class="text">
+            <h2>Alterar Política de Saída Global</h2>
+            <p>As políticas globais foram feitas para organizar o estoque de maneira eficiente e segura, seguindo as Boas Normas nos Serviços de Alimentação. No StoQ, ela afeta diretamente os alertas e lotes sugeridos, fazendo uso de uma das seguintes políticas:</p>
+
+            <div class="politicas">
+                <p><strong>PVPS: </strong>dá prioridade aos produtos com validade mais próxima.</p>
+                <p><strong>FIFO: </strong> dá prioridade aos produtos que entraram primeiro.</p>
+            </div>
+        </div>
+
+        <div class="form">
+            <mat-dialog-content [formGroup]="form">
+                <mat-radio-group formControlName="politica">
+                    <mat-radio-button value="FIFO">FIFO</mat-radio-button>
+                    <mat-radio-button value="PVPS">PVPS</mat-radio-button>
+                </mat-radio-group>
+            </mat-dialog-content>
+            <mat-dialog-actions align="end">
+                <button mat-button (click)="dialogRef.close()">Cancelar</button>
+                <button mat-flat-button color="primary" (click)="save()">Salvar</button>
+            </mat-dialog-actions>
+        </div>
+    </div>
+</div>

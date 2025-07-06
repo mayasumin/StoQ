@@ -1,0 +1,45 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.container {
+    display: flex;
+
+    .lateral {
+        width: 4.5rem;
+        display: flex;
+        justify-content: center;
+        padding-top: 1rem;
+
+        background-image: url('../../../assets/img/lateral.png');
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .container-form {
+        width: 100%;
+
+        .text {
+            padding: 1.5rem 1.5rem 0 1.5rem;
+
+            h2 {
+                color: $primary
+            }
+
+            .politicas {
+                strong {
+                    color: $secondary;
+                }
+            }
+        }
+
+        .form {
+            button {
+                width: 5.5rem;
+                height: 2.75rem;
+                border-radius: .5rem;
+                background-color: rgba(164, 180, 101, 0.75);
+                color: white;
+            }
+        }
+    }
+}
