@@ -7,6 +7,7 @@ import { FornecedoresList } from './pages/fornecedores/fornecedores-list/fornece
 import { FornecedoresForm } from './pages/fornecedores/fornecedores-form/fornecedores-form';
 import { Estoque } from './pages/estoque/estoque';
 import { NotaFiscalList } from './pages/nota-fiscal/nota-fiscal-list/nota-fiscal-list';
+import { RetiradaProdutosDisponiveis } from './pages/retirada/retirada-produtos-disponiveis/retirada-produtos-disponiveis';
 
 
 export const routes: Routes = [  
@@ -17,5 +18,6 @@ export const routes: Routes = [
     { path: 'fornecedores/novo', component: FornecedoresForm },
     { path: 'estoque', component: Estoque },
     { path: 'notasdeentrada', component: NotaFiscalList},
+    { path: 'retirada', component: RetiradaProdutosDisponiveis},
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
 ];

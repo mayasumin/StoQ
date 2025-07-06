@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="lateral"></div>
+
+    <div class="table-container">
+        <div class="superior">
+            <div class="header">
+                <h1>Movimentação de Estoque</h1>
+                <p>Selecione o produto que deseja fazer a retirada</p>
+            </div>
+    
+            <div class="button">
+                <button mat-raised-button color="primary" (click)="openModalSugerirLote()">Confirmar Seleção</button>
+            </div>
+        </div>
+
+        <div class="table">
+            <div *ngIf="loading">Carregando produtos...</div>
+            <div *ngIf="error" class="error">{{ error }}</div>
+            
+            <mat-radio-group [(ngModel)]="produtoSelecionado">
+                <table mat-table [dataSource]="dataSource" *ngIf="!loading && !error">
+                    <ng-container matColumnDef="selecionar">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let produto">
+                            <mat-radio-button [value]="produto"></mat-radio-button>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="nome">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Produto</th>
+                        <td mat-cell *matCellDef="let produto">{{ produto.nome }}</td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="qntEstoque">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Qtd. Estoque</th>
+                        <td mat-cell *matCellDef="let produto">{{ produto.qntEstoque }}</td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSize]="6" [pageSizeOptions]="[]" showFirstLastButtons></mat-paginator>
+
+            </mat-radio-group>
+        </div>
+    </div>
+</div>
