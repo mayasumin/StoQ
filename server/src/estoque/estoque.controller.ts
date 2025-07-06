@@ -56,4 +56,10 @@ export class EstoqueController {
         return this.service.getHistoricoRetiradas();
     }
 
+    @Get('entradas')
+    getHistoricoEntradas() {
+        return this.service.getHistoricoEntradas();
+    }
+
+
 }

@@ -3,12 +3,14 @@ import { EstoqueService, LoteSugerido, ProdutoComLotes } from '../../../../servi
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ConfirmarRetiradaForm } from '../confirmar-retirada-form/confirmar-retirada-form';
 import { CommonModule } from '@angular/common';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-sugerir-lote',
   imports: [
     CommonModule,
-    MatDialogModule
+    MatDialogModule,
+    MatDividerModule
   ],
   templateUrl: './sugerir-lote.html',
   styleUrl: './sugerir-lote.scss'

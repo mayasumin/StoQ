@@ -71,6 +71,15 @@ export interface NovaRetirada {
   responsavel: string;
 }
 
+export interface EntradaRaw {
+  idLote: string;
+  numero: string;
+  dataEntrada: string;
+  dataValidade: string;
+  qtdRecebida: number;
+  produto: { nome: string };
+}
+
 @Injectable({ providedIn: 'root' })
 export class EstoqueService {
   private readonly API = '/api/estoque'
@@ -112,6 +121,25 @@ export class EstoqueService {
   }
 
   getHistoricoRetiradas(): Promise<HistoricoRetirada[]> {
-    return firstValueFrom(this.http.get<HistoricoRetirada[]>(`${this.API}/historico-retirada`))
+    return firstValueFrom(this.http.get<HistoricoRetirada[]>(`${this.API}/historico-retiradas`))
   }
+
+  getHistoricoEntradas(): Promise<EntradaEstoque[]> {
+    return this.getHistoricoEntradasRaw()
+    .then(raws =>
+      raws.map(r => ({
+        produtoNome: r.produto.nome,
+        qtdRecebida: r.qtdRecebida,
+        numeroLote: r.numero,
+        dataValidade: new Date(r.dataValidade).toLocaleDateString(),
+        dataEntrada: new Date(r.dataEntrada).toLocaleDateString()
+      }))
+    );
+  }
+
+  getHistoricoEntradasRaw(): Promise<EntradaRaw[]> {
+  return firstValueFrom(
+    this.http.get<EntradaRaw[]>(`${this.API}/entradas`)
+  );
+}
 }

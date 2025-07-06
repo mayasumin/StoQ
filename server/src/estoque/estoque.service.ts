@@ -178,4 +178,23 @@ export class EstoqueService {
         })
     }
 
+    getHistoricoEntradas() {
+        return this.prisma.lote.findMany({
+        orderBy: { dataEntrada: 'desc' },
+        select: {
+            idLote: true,
+            numero: true,
+            dataEntrada: true,
+            dataValidade: true,
+            qtdRecebida: true,
+            produto: {
+                select: {
+                    nome: true
+                }
+            }
+        }
+        });
+    }
+
+
 }

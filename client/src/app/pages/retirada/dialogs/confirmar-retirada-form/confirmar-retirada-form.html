@@ -1,1 +1,39 @@
-<p>confirmar-retirada-form works!</p>
+<div class="container">
+  <div class="lateral"></div>
+
+  <div class="container-form">
+    <h2>Confirmar Retirada</h2>
+    <mat-divider></mat-divider>
+
+    <mat-dialog-content [formGroup]="form">
+      <p><strong>Produto:</strong> {{ data.produto.nome }}</p>
+      <p><strong>Lote:</strong> {{ data.lote.numero }}</p>
+      <p><strong>Data/Hora da Retirada:</strong> {{ dataHora | date:'dd/MM/yy HH:mm' }}</p>
+      <p><strong>Disponível:</strong> {{ disponivel }}</p>
+      
+      <div class="input">
+        <strong>Quantidade a Retirar</strong>
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="quantidade" type="number" required/>
+        </mat-form-field>
+      </div>
+
+      <div class="input">
+        <strong>Responsável</strong>
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="responsavel" required />
+        </mat-form-field>
+      </div>
+    
+    
+      <p *ngIf="error" class="erro">{{ error }}</p>
+    </mat-dialog-content>
+    
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cancelar</button>
+      <button mat-raised-button color="primary" (click)="confirmRetirada()">Confirmar</button>
+    </mat-dialog-actions>
+
+  </div>
+</div>
+

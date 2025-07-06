@@ -1,1 +1,31 @@
-<p>dashboard works!</p>
+<div class="container">
+    <div class="header"></div>
+
+    <div class="container-columns">
+        <div class="column">
+            <h2>Estoque Crítico</h2>
+            <mat-card *ngFor="let produto of produtosCriticos" class="card-alerta">
+                <mat-card-title>{{ produto.nome }}</mat-card-title>
+                <mat-card-content>
+                    <p><strong>Qtd. mínima:</strong> {{ produto.qntMin }}</p>
+                    <p><strong>Qtd. atual:</strong> {{ produto.qntEstoque }}</p>
+                </mat-card-content>
+            </mat-card>
+            <p *ngIf="produtosCriticos.length === 0">Nenhum produto com estoque crítico</p>
+        </div>
+
+        <div class="column">
+            <h2>Alerta de Validade</h2>
+            <mat-card *ngFor="let alerta of alertasValidade" class="card-alerta" [ngClass]="alerta.status.toLowerCase()">
+                <mat-card-title>{{ alerta.produto.nome }}</mat-card-title>
+                <mat-card-content>
+                    <p><strong>Lote:</strong> {{ alerta.lote.numero }}</p>
+                    <p><strong>Validade:</strong> {{ alerta.lote.dataValidade | date:'dd/MM/yy' }}</p>
+                    <p><strong>Status:</strong> <span [ngStyle]="{ color: alerta.status === 'VENCIDO' ? 'red' : 'orange' }"> {{ alerta.status }}</span></p>
+                    <p><strong>Qtd. Lote:</strong> {{ alerta.lote.qtdRecebida }}</p>
+                </mat-card-content>
+            </mat-card>
+            <p *ngIf="alertasValidade.length === 0">Nenhum alerta de validade</p>
+        </div>
+    </div>
+</div>

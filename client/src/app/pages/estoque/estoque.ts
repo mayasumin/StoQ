@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 import { NotasPendentes } from './dialogs/notas-pendentes/notas-pendentes';
@@ -7,7 +7,7 @@ import { ItensPendentes } from './dialogs/itens-pendentes/itens-pendentes';
 import { EntradaLoteForm } from './dialogs/entrada-lote-form/entrada-lote-form';
 import { NotaFiscalHeader } from '../../services/nota-fiscal';
 import { SHARED_TABLE_IMPORTS } from '../../shared/shared-imports/shared-table-imports';
-import { EntradaEstoque } from '../../services/estoque';
+import { EntradaEstoque, EstoqueService } from '../../services/estoque';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 
@@ -21,27 +21,33 @@ import { MatPaginator } from '@angular/material/paginator';
   templateUrl: './estoque.html',
   styleUrl: './estoque.scss'
 })
-export class Estoque implements AfterViewInit {
-  displayedColumns: string[] = ['produto', 'lote', 'dataEntrada', 'dataValidade', 'qtdRecebida'];
+export class Estoque implements OnInit, AfterViewInit {
+  displayedColumns: string[] = ['produtoNome', 'numeroLote', 'dataEntrada', 'dataValidade', 'qtdRecebida'];
   dataSource = new MatTableDataSource<EntradaEstoque>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private service: EstoqueService
   ) {}
 
-  ngAfterViewInit(): void {
-      this.dataSource.paginator = this.paginator;
+  ngOnInit(): void {
+    this.service.getHistoricoEntradas().then(entradas => {
+      this.dataSource.data = entradas;
+      this.dataSource._updateChangeSubscription();
+
+    })
+    .catch(err => console.error(err))
   }
 
-  addEntradaHistorico(entrada: {
-    produtoNome: string;
-    qtdRecebida: number;
-    numeroLote: string;
-    dataValidade: string;
-    dataEntrada: string;
-  }) {
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+
+  }
+
+
+  addEntradaHistorico(entrada: EntradaEstoque) {
     this.dataSource.data = [...this.dataSource.data, entrada];
   }
 

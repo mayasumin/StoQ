@@ -1,24 +1,27 @@
-<h2 mat-dialog-title>Lote sugerido para: {{ data.produto.nome }}</h2>
+<div class="container">
+  <div class="lateral"></div>
 
-<mat-dialog-content *ngIf="loteSugerido; else erroTemplate">
-  <p><strong>Número do Lote:</strong> {{ loteSugerido.numero }}</p>
-  <p><strong>Data de Validade:</strong> {{ loteSugerido.dataValidade | date: 'shortDate' }}</p>
-  <p><strong>Quantidade Recebida:</strong> {{ loteSugerido.qtdRecebida }}</p>
-  <p><strong>Quantidade Retirada:</strong>
-    {{ totalRetirado }}
-  </p>
-  <p><strong>Disponível:</strong>
-    {{ disponivel }}
-  </p>
-</mat-dialog-content>
+  <div class="sugestao-container">
+    <h2>Sugestão de Lote</h2>
+    <mat-divider></mat-divider>
 
-<ng-template #erroTemplate>
-  <mat-dialog-content>
-    <p>{{ error }}</p>
-  </mat-dialog-content>
-</ng-template>
+    <mat-dialog-content *ngIf="loteSugerido; else erroTemplate">
+      <p><strong>Número do Lote:</strong> {{ loteSugerido.numero }}</p>
+      <p><strong>Data de Validade:</strong> {{ loteSugerido.dataValidade | date: 'dd/MM/yy' }}</p>
+      <p><strong>Disponível:</strong>
+        {{ disponivel }}
+      </p>
+    </mat-dialog-content>
 
-<mat-dialog-actions align="end" *ngIf="loteSugerido">
-  <button mat-button (click)="nextLote()">Próximo Lote</button>
-  <button mat-raised-button color="primary" (click)="acceptLote()">Aceitar</button>
-</mat-dialog-actions>
+    <ng-template #erroTemplate>
+      <mat-dialog-content>
+        <p>{{ error }}</p>
+      </mat-dialog-content>
+    </ng-template>
+
+    <mat-dialog-actions align="end" *ngIf="loteSugerido">
+      <button mat-flat-button (click)="nextLote()">Próximo Lote</button>
+      <button mat-flat-button color="primary" (click)="acceptLote()">Aceitar</button>
+    </mat-dialog-actions>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+@use '../../../../styles/variables' as *;
+
+:host ::ng-deep .mat-mdc-form-field-flex {
+  height: 2rem !important;
+  padding: 0 !important;
+  align-items: center !important;
+  border-radius: 10px !important;
+}
+
+:host ::ng-deep .mat-mdc-input-element {
+  height: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: normal !important;
+}
+
+:host ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+:host ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing,
+:host ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__notch{
+    border-color: $terciary !important;
+}
+
+:host ::ng-deep .mat-mdc-input-element {
+  caret-color: $terciary !important; 
+}
+
+:host ::ng-deep .mat-mdc-slide-toggle .mdc-switch--selected .mdc-switch__track::before,
+:host ::ng-deep .mat-mdc-slide-toggle .mdc-switch--selected .mdc-switch__track::after,
+:host ::ng-deep .mat-mdc-slide-toggle.mat-checked .mdc-switch__track::before,
+:host ::ng-deep .mat-mdc-slide-toggle.mat-checked .mdc-switch__track::after {
+  background-color: $secondary !important; 
+}
+
+:host ::ng-deep .mat-mdc-slide-toggle .mdc-switch__icon--on {
+  display: none !important;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+
+    .lateral {
+        background-color: $secondary;
+        width: 15%;
+    }
+
+    .container-form {
+        width: 100%;
+        
+        .input {
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+        }
+        
+        h2 {
+            color: $primary;
+            padding: 0 .5rem;
+        }
+
+        strong {
+            color: $terciary;
+            font-weight: 500;
+        }
+    }
+}

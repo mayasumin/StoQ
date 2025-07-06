@@ -8,6 +8,8 @@ import { FornecedoresForm } from './pages/fornecedores/fornecedores-form/fornece
 import { Estoque } from './pages/estoque/estoque';
 import { NotaFiscalList } from './pages/nota-fiscal/nota-fiscal-list/nota-fiscal-list';
 import { RetiradaProdutosDisponiveis } from './pages/retirada/retirada-produtos-disponiveis/retirada-produtos-disponiveis';
+import { NotaFiscalForm } from './pages/nota-fiscal/nota-fiscal-form/nota-fiscal-form';
+import { RetiradaHistorico } from './pages/retirada/retirada-historico/retirada-historico';
 
 
 export const routes: Routes = [  
@@ -18,6 +20,8 @@ export const routes: Routes = [
     { path: 'fornecedores/novo', component: FornecedoresForm },
     { path: 'estoque', component: Estoque },
     { path: 'notasdeentrada', component: NotaFiscalList},
+    { path: 'notasdeentrada/novo', component: NotaFiscalForm },
     { path: 'retirada', component: RetiradaProdutosDisponiveis},
+    { path: 'historicoretiradas', component: RetiradaHistorico },
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
 ];
